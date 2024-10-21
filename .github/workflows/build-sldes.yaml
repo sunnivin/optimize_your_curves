@@ -24,7 +24,7 @@ jobs:
           -v ${{ github.workspace }}:/home/marp/app \
           -e LANG=${{ secrets.LANG }} \
           -p 8080:8080 -p 37717:37717 \
-          marpteam/marp-cli:v3.2.0 --theme ngi-theme.css --html .
+          marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html .
 
     - name: Commit and Push HTML slides to gh-pages
       run: |
