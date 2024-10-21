@@ -1,0 +1,50 @@
+name: Build and Deploy Slides
+
+on:
+  push:
+    branches:
+      - main  # Triggers on pushes to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      run: |
+        echo "Docker is already available on GitHub-hosted runners."
+
+    - name: Run Marp to generate HTML slides
+      run: |
+        docker run --rm --init \
+          -v ${{ github.workspace }}:/home/marp/app \
+          -e LANG=${{ secrets.LANG }} \
+          -p 8080:8080 -p 37717:37717 \
+          marpteam/marp-cli:v3.2.0 --theme ngi-theme.css --html .
+
+    - name: Commit and Push HTML slides to gh-pages
+      run: |
+        # Install Git if it's not already available
+        sudo apt-get update
+        sudo apt-get install -y git
+
+        # Configure git user
+        git config --global user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+
+        # Create gh-pages branch if it doesn't exist
+        git checkout -b gh-pages
+
+        # Remove old slides and add new ones
+        rm -rf ./*
+        cp -r /home/marp/app/*.html .
+
+        # Add, commit, and push the changes
+        git add .
+        git commit -m "Update slides"
+        git push -f origin gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
