@@ -23,7 +23,7 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 <!-- paginate: true -->
 
 ```
-$ whoami
+$ echo $(whoami)
 ```
 ---
 
@@ -57,8 +57,8 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 
 
-> **Curve Fitting**: The process of defining a function that describes the relationship between data points by discovering the parameters that best match the data with a curve.
-<span style="display: block; text-align: right; font-style: italic; margin-top: 0.5rem;">*https://machinelearningmastery.com/curve-fitting-with-python/*</span>
+> **Curve Fitting**: the empirical determination of a curve or function that approximates a set of data
+<span style="display: block; text-align: right; font-style: italic; margin-top: 0.5rem;">*Merriam-Webster Dictionary*</span>
 
 ---
 
