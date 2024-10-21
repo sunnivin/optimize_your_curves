@@ -19,6 +19,7 @@ jobs:
 
     - name: Run Marp to generate HTML slides
       run: |
+        cd talk
         docker run --rm --init \
           -v ${{ github.workspace }}:/home/marp/app \
           -e LANG=${{ secrets.LANG }} \
