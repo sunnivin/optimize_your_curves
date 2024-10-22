@@ -23,7 +23,7 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 <!-- paginate: true -->
 
 ```
-$ echo $(whoami)
+echo $(whoami)
 ```
 ---
 
@@ -32,9 +32,9 @@ $ echo $(whoami)
 # Agenda
 
 ## Curve Fitting 
+  - Why? 
   - What?
     - Example use cases  
-  - Why? 
   - How? 
     - Attention: how to deal with bounds
  
@@ -44,17 +44,16 @@ $ echo $(whoami)
 
 # Start with a data set coming in, with a known model, how does it look like? 
 
+#TODO include picture of plot
+
 
 ---
 
-# Give definitions: difference of function minimization and curve fitting 
----
+
 
 
 > **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible 
 specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
-<span style="display: block; text-align: right; font-style: italic; margin-top: 0.5rem;">*Merriam-Webster Dictionary*</span>
-
 
 
 > **Curve Fitting**: the empirical determination of a curve or function that approximates a set of data
@@ -62,42 +61,59 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ---
 
-# What is optimization? 
- - Find the extremas of a given function 
- - Find an optimal odel based on a given data set 
- - Find a set of optimal parameters on a given data set and model 
+# What *is* Curve Fitting?
+
+* Identify the **best-fit curve** for a dataset with a known model 
+    * **Minimize** the difference between *observed* and *predicted* values
+        $$ 
+        \chi^2 = \sum_{i=1}^{N} \frac{(y_i^\text{obs} - y_i^\text{pred})^2}{\sigma_i^2} 
+        $$
+* Categories of problems  
+    * Linear vs non-linear 
+      $$ 
+      y_1 = ax + b \qquad \text{vs} \quad y_2 = \sin(\omega t)\text{e}^{-x^2}
+      $$
+    * Constrained vs unconstrained
+      $$
+        a\in [-\infty,\infty] \quad \text{vs} \quad a \in [-\pi,\pi/3]
+      $$
+
+
+
+---
+
+# Minimize the difference between *observed* and *predicted* values 
+
+<!-- _class: split-text-image -->
+
+<div class=ldiv>
+
+
+![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
+*Figure credit: Radovan Bast*
+
+
+</div>
+
+
+<div class=rdiv>
+
+
+![w:450 h:350](figures/illustrations/automate-all.png)
+*Figure Credit: [http://memegenerator.net/](http://memegenerator.net/)*
+
+
+</div>
+
 
 --- 
 
-# What is Curve Fitting?
+# Real life examples 
 
-- Identifying the **best-fit curve** for a dataset with a known model 
-  - Typically involves **minimizing** the difference between observed and predicted values
-- Linear vs non-linear problem 
-- Constrained vs unconstrained optimization
-- **Real-life Examples**
-  - Engineering, economics
-
----
-
-# Key Concepts in Curve Fitting
-
-- **Objective Function**: The function representing the error to minimize
-- **Variables and Parameters**: Values modified to achieve the best fit
-- **Constraints**: Optional limits on parameters
-- Global vs local extremas
----
-
-# **4. Common Curve Fitting Algorithms**
-
-- **Gradient Descent**: Useful for optimizing parameters in large datasets
-- **Simplex Method**: Applicable in linear problems
-- **Levenberg-Marquardt**: For non-linear least squares fitting
 
 ---
 
 # Curve fitting vs. model optimization 
-
 
 | Aspect              | Curve Fitting                                   | Model Optimization                              |
 |:---------------------|:------------------------------------------------|:------------------------------------------------|
@@ -105,54 +121,40 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 | **Applications**     | Scientific, engineering, and data analysis | Machine learning, operations research, statistics, etc. |
 | **Techniques**      | Primarily uses least squares regression, polynomial fitting, non-linear fitting | Includes hyperparameter tuning, model selection, regularization, etc. |
 | **Goal**            | Model relationships between variables through a curve | Improve performance across various model types |
-| **Context**         | Specific to approximating data with mathematical functions | General performance optimization for predictive models |
+
+
+
+---
+<!-- _class: title -->
+<!-- paginate: false -->
+# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
+
+--- 
+
+<!-- _class: title -->
+# :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 
+
+--- 
+<!-- paginate: true -->
+
+
+# Curve fitting in Python 
+
+## `lmfit` 
+GitHub :star: 1.1k
+
+- High-level interface to non-linear optimization and curve fitting problems
+- Built on SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
+- Supports 
+  - Uncertainties and parameter correlations estimates 
+  - Functionality for handeling [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
+  - Easy change of the fitting algorithm 
 
 
 ---
 
 
-# Introduction to `lmfit`
-
-
-- A Python library designed for **curve fitting** and parameter optimization
-- Built on SciPy’s optimization capabilities
-- Manages uncertainties and parameter correlations
-- Supports constraints for fitting
-
-
----
-
-<!-- _class: split-text -->
-
-
-# Handeling bounds 
-
-<div class=ldiv>
-
-#
-
-## [scipy.optimize.least_squares](https://docs.scipy.org/doc/scipy/reference/optimize.html#least-squares-and-curve-fitting)
-
-- `bounds`2-tuple of array_like or Bounds, optional 
-
-</div>
-
-
-<div class=rdiv>
-
-#
-
-## [lmfit](https://lmfit.github.io/lmfit-py/bounds.html)
-
-- Bounds set through the `Param` class
-
-</div>
-
-
----
-
-
-# **6. Demo: Curve Fitting with `lmfit`**
+# Demo: Curve Fitting with `lmfit`**
 
 ### Step 1: Problem Setup
 
@@ -177,30 +179,7 @@ plt.show()
 
 ---
 
-
-
-# **3. Optimization: Key Concepts**
-
-- **Objective Function**: The function to minimize or maximize
-- **Variables and Parameters**: Values adjusted to optimize the function
-- **Constraints**: Optional limits on variables
-- **Global vs Local Minima/Maxima**: 
-  - Global: The overall best solution
-  - Local: A suboptimal solution
-
----
-
-# **4. Common Optimization Algorithms**
-
-- **Gradient Descent**: Used in large-scale problems like machine learning
-- **Simplex Method**: Useful for linear programming
-- **Levenberg-Marquardt**: For non-linear least squares problems
-
----
-
----
-
-# **7. Interpreting the Results**
+# Interpreting the Results
 
 - **Parameter Estimates**: Best-fit values for `a`, `b`, and `c`
 - **Fit Report**: Provides uncertainties and goodness-of-fit statistics
@@ -208,7 +187,7 @@ plt.show()
 
 ---
 
-# **8. Extending the Example**
+# Extending the Example
 
 - **Adding Constraints**:
   - Constrain parameters (e.g., `a > 0`)

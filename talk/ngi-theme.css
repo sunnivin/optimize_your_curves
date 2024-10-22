@@ -177,33 +177,89 @@ section.split-text .rdiv {
 section.split-text-image {
   overflow: visible;
   display: grid;
-  grid-template-columns: 500px 500px;
-  grid-template-rows: 100px auto;
+  grid-template-columns: 1fr 1fr;
+  /* Use fractions for responsive columns */
+  grid-template-rows: auto auto;
+  /* Automatically adjust row heights */
   grid-template-areas:
     "slideheading slideheading"
+    /* Header spans both columns */
     "leftpanel rightpanel";
+  /* Panels for images */
 }
 
-/* debug */
+/* Debug */
 section.split-text-image h3,
 section.split-text-image .ldiv,
 section.split-text-image .rdiv {
   border: none;
+  /* No border for debug mode */
 }
 
-section.split-text-image h3 {
+section.split-text-image {
+  overflow: visible;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Use fractions for responsive columns */
+  grid-template-rows: auto auto;
+  /* Automatically adjust row heights */
+  grid-template-areas:
+    "slideheading slideheading"
+    /* Header spans both columns */
+    "leftpanel rightpanel";
+  /* Panels for images */
+}
+
+/* Debug */
+section.split-text-image h1,
+section.split-text-image .ldiv,
+section.split-text-image .rdiv {
+  border: none;
+  /* No border for debug mode */
+}
+
+section.split-text-image h1 {
   grid-area: slideheading;
+  /* Place the header in the first row */
   font-size: 50px;
+  /* Set the font size for the header */
+  text-align: center;
+  /* Center the header text */
+  margin: 0;
+  /* Remove default margin */
+  overflow: hidden;
+  /* Hide overflow if text is too long */
+  text-overflow: ellipsis;
+  /* Add ellipsis if the text overflows */
 }
 
 section.split-text-image .ldiv {
   grid-area: leftpanel;
-  text-align: left;
+  /* Place left image in the left column */
+  display: flex;
+  /* Use flexbox for image alignment */
+  justify-content: center;
+  /* Center image horizontally */
+  align-items: center;
+  /* Center image vertically */
 }
 
 section.split-text-image .rdiv {
   grid-area: rightpanel;
-  text-align: right;
+  /* Place right image in the right column */
+  display: flex;
+  /* Use flexbox for image alignment */
+  justify-content: center;
+  /* Center image horizontally */
+  align-items: center;
+  /* Center image vertically */
+}
+
+img {
+  max-width: 100%;
+  /* Responsive images */
+  height: auto;
+  /* Maintain aspect ratio */
 }
 
 
