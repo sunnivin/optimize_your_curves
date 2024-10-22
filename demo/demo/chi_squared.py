@@ -26,32 +26,28 @@ plot_type: str = "low"
 
 
 # Data plot
-# plt.figure(figsize=(10, 5))
-plt.scatter(x, y_observed, color="red", label="Data", zorder=3)
+plt.scatter(x, y_observed, color="red", label="Data", alpha=0.6)
 
 # Add function expressions
-plt.text(
-    0.5,
-    0.95,
-    "$y_{model}" + f"= {true_params[0]}x + {true_params[1]}$",
-    color="green",
-    fontsize=12,
-    ha="center",
-    transform=plt.gca().transAxes,
-)
+# plt.text(
+#     0.5,
+#     0.95,
+#     "$y_{model}" + f"= {true_params[0]}x + {true_params[1]}$",
+#     color="green",
+#     fontsize=12,
+#     ha="center",
+#     transform=plt.gca().transAxes,
+# )
 plt.xlabel("x")
 plt.ylabel("y")
 plt.legend()
-plt.grid(alpha=0.3)
-
-# Save the figure
-plt.savefig(f"observed_{plot_type}.png", dpi=300)
-plt.close()  # Close the figure to free memory
+plt.savefig(f"observed_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
+plt.close()
 
 
 # Plot 1: Observed vs Predicted
 plt.figure(figsize=(10, 5))
-plt.scatter(x, y_observed, color="red", label="Data", zorder=3)
+plt.scatter(x, y_observed, color="red", label="Data", alpha=0.6)
 plt.plot(x, y_true, color="green", linestyle="--", label="Model", zorder=1)
 plt.plot(x, y_predicted, color="blue", label="Fit", zorder=2)
 
@@ -88,10 +84,9 @@ plt.text(
 plt.xlabel("x")
 plt.ylabel("y")
 plt.legend()
-plt.grid(alpha=0.3)
-
-# Save the figure
-plt.savefig(f"observed_vs_predicted_{plot_type}.png", dpi=300)
+plt.savefig(
+    f"observed_vs_predicted_{plot_type}.png", bbox_inches="tight", pad_inches=0.03
+)
 plt.close()  # Close the figure to free memory
 
 # Plot 2: Residuals
@@ -100,8 +95,6 @@ plt.bar(x, residuals, color="purple", alpha=0.6)
 plt.axhline(0, color="black", linewidth=1)
 plt.xlabel("x")
 plt.ylabel("Residuals (Observed - Predicted)")
-plt.grid(alpha=0.3)
-
 # Save the figure
 plt.savefig(f"residuals_plot_{plot_type}.png", dpi=300)
 plt.close()  # Close the figure to free memory
@@ -119,8 +112,5 @@ plt.axhline(
 plt.xlabel("x")
 plt.ylabel(r"$\chi^2$")
 plt.legend()
-plt.grid(alpha=0.3)
-
-# Save the figure
-plt.savefig(f"chi_square_plot_{plot_type}.png", dpi=300)
-plt.close()  # Close the figure to free memory
+plt.savefig(f"chi_square_plot_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
+plt.close()

@@ -10,6 +10,7 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 
 <!-- _class: title -->
 <!-- _header: '_24.10.2024_' -->
+<!-- paginate: false -->
 # Optimize your curves, 
 ## (No gym required)
 
@@ -37,20 +38,15 @@ echo $(whoami)
 
 # Agenda
 
-#TODO update content in the end
-
-## Curve Fitting 
-  - Why? 
-  - What?
-    - Example use cases  
-  - How? 
-    - Attention: how to deal with bounds
- 
+- Problem 
+- Curve fitting 
+- `lmfit`
+- Demo 
 
 --- 
 # Problem
 
-|![h:500](figures/plot/observed_low.png)|
+|![](figures/plot/observed_low.png)|
 |:--:|
 | Which model parameters describe this data? |
 
@@ -101,14 +97,14 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ##
 
-![w:600 h:300](figures/plot/observed_vs_predicted_low.png)
+![](figures/plot/observed_vs_predicted_low.png)
 
 
 
 <p class="break"></p>
 
 ###
-![w:600 h:300](figures/plot/chi_square_plot_low.png)
+![](figures/plot/chi_square_plot_low.png)
 
 </div>
 
@@ -121,7 +117,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 | |
 |-----|
-|![](figures/plot/parameters_values_lmfit.png)|
+|![](figures/plot/true_model_sine.png)|
  
 --- 
 
@@ -181,7 +177,6 @@ Horizontal displacement curves under load
 
 
 # Problem set up
-
 ```python
 from lmfit import Minimizer, create_params
 
@@ -202,7 +197,6 @@ parameters_initial = create_params(
 
 minimizer = Minimizer(residual, parameters_initial, fcn_args=(x, data))
 result = minimizer.minimize(method="least_squares")
-
 ```
 
 --- 
@@ -263,11 +257,9 @@ params = create_params(amp=dict(value=10, min=0),
 ---
 
 <!-- _class: title -->
-<!-- paginate: false -->
 # :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
 
 --- 
 
 <!-- _class: title -->
-<!-- paginate: false -->
 # :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 
