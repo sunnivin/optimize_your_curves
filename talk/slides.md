@@ -84,6 +84,8 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 # Minimize the difference between *observed* and *predicted* values 
 
+
+#TODO include illustrations
 <!-- _class: split-text-image -->
 
 <div class=ldiv>
@@ -98,9 +100,8 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 <div class=rdiv>
 
-
-![w:450 h:350](figures/illustrations/automate-all.png)
-*Figure Credit: [http://memegenerator.net/](http://memegenerator.net/)*
+![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
+*Figure credit: Radovan Bast*
 
 
 </div>
@@ -108,7 +109,24 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 --- 
 
-# Real life examples 
+# Real (work) life example 
+
+<div class="twocols">
+
+
+##
+![w:450 h:350](figures/illustrations/full_model.png)
+Monopile system 
+
+
+
+<p class="break"></p>
+
+###
+![w:450 h:350](figures/illustrations/scaled_pile_head_equal_beginning.png)
+Horizontal displacement curves under load
+
+</div>
 
 
 ---
@@ -135,35 +153,46 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 # :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 
 
 --- 
+
+
 <!-- paginate: true -->
 
-
-# Curve fitting in Python 
-
-## `lmfit` 
-GitHub :star: 1.1k
-Latest commit (22.10.2024): 13.10.2024
-
-- High-level interface to non-linear optimization and curve fitting problems
-- Built on SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
-- Supports 
-  - Uncertainties and parameter correlations estimates 
-  - Functionality for handeling [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
+# Curve fitting in Python needs
+  - Estimate of uncertainties and parameter correlations estimates
   - Easy change of the fitting algorithm 
+    - Functionality for handeling parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
+  
 
+
+--- 
+
+# Curve fitting in Python tool 
+
+
+| **Topic**                        | **Details**                                                                         |
+|:----------------------------------|:-------------------------------------------------------------------------------------|
+| Library Name                 | `lmfit`                                                                             |
+| GitHub Stars                 | :star: 1.1k                                                                              |
+| Last Commit Date           | 13.10.2024 (on 22.10.2024)                                             |
+| Description                  | High-level interface to non-linear optimization and curve fitting problems          |
+| Built On                     | SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) |
 
 ---
 
-| **Topic**                        | **Details**                                                                         |
-|----------------------------------|-------------------------------------------------------------------------------------|
-| **Library Name**                 | `lmfit`                                                                             |
-| **GitHub Stars**                 | ⭐ 1.1k                                                                              |
-| **Latest Commit Date**           | 22.10.2024 (Last Update: 13.10.2024)                                              |
-| **Description**                  | High-level interface to non-linear optimization and curve fitting problems          |
-| **Built On**                     | SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) |
-| **Supports**                     | - Uncertainties and parameter correlations estimates                                |
-|                                  | - Functionality for handling [bounds](https://lmfit.github.io/lmfit-py/bounds.html) |
-|                                  | - Easy change of the fitting algorithm                                              |
+
+# Tiling can improve the access pattern
+
+<div class="twocols">
+
+
+## Left 
+
+<p class="break"></p>
+
+
+## Right 
+</div>
+
 
 ---
 
@@ -197,11 +226,6 @@ plt.show()
 - **Parameter Estimates**: Best-fit values for `a`, `b`, and `c`
 - **Fit Report**: Provides uncertainties and goodness-of-fit statistics
 - **Visualization**: Compare the fitted model to the noisy data
-
----
-
-# Extending the Example
-
 - **Adding Constraints**:
   - Constrain parameters (e.g., `a > 0`)
 - **Fitting Different Models**:
