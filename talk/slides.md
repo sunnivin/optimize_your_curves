@@ -20,6 +20,12 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 
 --- 
 
+<!-- _class: title -->
+<!-- paginate: false -->
+# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
+
+--- 
+
 <!-- paginate: true -->
 
 ```
@@ -44,10 +50,14 @@ echo $(whoami)
 --- 
 # Problem
 
-![h:500 right](figures/plot/observed_low.png)
+|![h:500](figures/plot/observed_low.png)|
+|:--:|
+| Which model parameters describe this data? |
 
 
-- What are the optimal model parameters for my data? 
+
+
+<!-- - What are the optimal model parameters for my data?  -->
 
 ---
 
@@ -73,7 +83,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
       $$ 
       y_1 = ax + b \qquad \text{vs} \quad y_2 = \sin(\omega t)\text{e}^{-x^2}
       $$
-    * Constrained vs unconstrained
+    * Unconstrained vs Constrained
       $$
         a\in [-\infty,\infty] \quad \text{vs} \quad a \in [-\pi,\pi/3]
       $$
@@ -82,42 +92,36 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ---
 
-# Difference of *observed* and *predicted* values 
-
-<!-- _class: split-text-image -->
-
-<div class=ldiv>
+# Difference between *observed* and *predicted* values 
 
 
-![](figures/plot/observed_vs_predicted_low.png)
 
+<div class="twocols">
+
+
+##
+
+![w:600 h:300](figures/plot/observed_vs_predicted_low.png)
+
+
+
+<p class="break"></p>
+
+###
+![w:600 h:300](figures/plot/chi_square_plot_low.png)
 
 </div>
 
 
-<div class=rdiv>
-
-![](figures/plot/chi_square_plot_low.png)
-
-</div>
-
----
-
-# Curve fitting vs. model optimization 
-
-| Aspect              | Curve Fitting                                   | Model Optimization                              |
-|:---------------------|:------------------------------------------------|:------------------------------------------------|
-| **Scope**           | Specific; find a curve that fits data | Broad; enhance model performance in various contexts |
-| **Applications**     | Scientific, engineering, and data analysis | Machine learning, operations research, statistics, etc. |
-| **Techniques**      | Primarily uses least squares regression, polynomial fitting, non-linear fitting | Includes hyperparameter tuning, model selection, regularization, etc. |
-| **Goal**            | Model relationships between variables through a curve | Improve performance across various model types |
 
 
 ---
 
-# The complicated real world is non-linear 
+# The real world is complicated
 
-![](figures/plot/observed_sin.png)
+| |
+|-----|
+|![](figures/plot/parameters_values_lmfit.png)|
  
 --- 
 
@@ -128,7 +132,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ##
 ![w:450 h:350](figures/illustrations/full_model.png)
-Monopile system 
+Offshore structure
 
 
 
@@ -141,32 +145,22 @@ Horizontal displacement curves under load
 </div>
 
 
----
-<!-- _class: title -->
-<!-- paginate: false -->
-# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
-
---- 
-
-<!-- _class: title -->
-# :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 
-
 --- 
 
 
 <!-- paginate: true -->
 
-# Curve fitting in Python needs
-  - Estimate of uncertainties and parameter correlations estimates
-  - Non-linear problem formulation
-  - Easy change of the fitting algorithm 
-    - Functionality for handeling parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
+# Curve fitting requirements 
+  - Provide estimates of parameter uncertanties
+  - Handle non-linear problem formulations
+  - Easy changebility of the optimization algorithm 
+  - High level functionality for handling parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
   
 
 
 --- 
 
-# Recommended tool 
+# Recommended tool (by me) 
 
 
 | **Topic**                        | **Details**                                                                         |
@@ -180,63 +174,100 @@ Horizontal displacement curves under load
 ---
 
 
-# Tiling can improve the access pattern
 
-<div class="twocols">
-
-
-## Left 
-
-<p class="break"></p>
-
-
-## Right 
-</div>
-
+# <div style="text-align: center;">:sparkles: Let's see some code :sparkles: </div>
 
 ---
 
-# Demo: Curve Fitting with `lmfit`**
 
-### Step 1: Problem Setup
+# Problem set up
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
-from lmfit import Model
+from lmfit import Minimizer, create_params
 
-def model_function(x, a, b, c):
-    return a * np.exp(-b * x) + c
+def residual(parameters, x, data):
+    model = (
+        parameters["amp"]
+        * np.sin(x * parameters["omega"] + parameters["shift"])
+        * np.exp(-x * x * parameters["decay"])
+    )
+    return model - data
 
-x_data = np.linspace(0, 10, 100)
-y_true = model_function(x_data, a=3, b=1, c=0.5)
-noise = np.random.normal(0, 0.2, x_data.shape)
-y_data = y_true + noise
+parameters_initial = create_params(
+    amp=10,
+    decay=0.1,
+    omega=3.0,
+    shift=value=0.0,
+)
 
-plt.scatter(x_data, y_data, label='Noisy Data')
-plt.plot(x_data, y_true, color='red', label='True Model')
-plt.legend()
-plt.show()
+minimizer = Minimizer(residual, parameters_initial, fcn_args=(x, data))
+result = minimizer.minimize(method="least_squares")
+
 ```
 
+--- 
+
+# Handeling bounds 
+
+```python
+from lmfit import Parameters 
+
+params = Parameters()
+params.add('amp', value=10, min=0)
+params.add('decay', value=0.1)
+params.add('shift', value=0.0, min=-np.pi/2., max=np.pi/2.)
+params.add('omega', value=3.0)
+
+```
+
+```python
+from lmfit import create_params
+
+params = create_params(amp=dict(value=10, min=0),
+                       decay=0.1,
+                       omega=3,
+                       shift=dict(value=0, min=-np.pi/2, max=np.pi/2))
+```
+
+
 ---
 
-# Interpreting the Results
 
-- **Parameter Estimates**: Best-fit values for `a`, `b`, and `c`
-- **Fit Report**: Provides uncertainties and goodness-of-fit statistics
-- **Visualization**: Compare the fitted model to the noisy data
-- **Adding Constraints**:
-  - Constrain parameters (e.g., `a > 0`)
-- **Fitting Different Models**:
-  - Experiment with other functions (e.g., polynomials, sine)
-- **Advanced Features**:
-  - Handle multiple datasets, parameter bounds, and more
+# Interperet simulation results
+
+```bash
+[[Fit Statistics]]
+    # fitting method   = least_squares
+    # function evals   = 58
+    # data points      = 301
+    # variables        = 4
+    chi-square         = 12.1867036
+    reduced chi-square = 0.04103267
+    Akaike info crit   = -957.236198
+    Bayesian info crit = -942.407756
+[[Variables]]
+    amp:    5.03088066 +/- 0.04005821 (0.80%) (init = 10)
+    decay:  0.02495457 +/- 4.5396e-04 (1.82%) (init = 0.1)
+    omega:  2.00026311 +/- 0.00326183 (0.16%) (init = 3)
+    shift: -0.10264955 +/- 0.01022294 (9.96%) (init = 0)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(omega, shift) = -0.7852
+    C(amp, decay)   = +0.5840
+    C(amp, shift)   = -0.1179
+```
+---
+
+
+# <div style="text-align: center;">:woman_technologist: Demo :woman_technologist:  </div>
 
 ---
-<!--
-class: center, middle
--->
 
-# <div style="text-align: center;">:sparkles: :woman_technologist: Let's see some code :woman_technologist: :sparkles: </div>
+<!-- _class: title -->
+<!-- paginate: false -->
+# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
 
+--- 
+
+<!-- _class: title -->
+<!-- paginate: false -->
+# :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 

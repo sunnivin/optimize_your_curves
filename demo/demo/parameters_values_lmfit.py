@@ -1,11 +1,11 @@
 import numpy as np
 
-from lmfit import Minimizer, create_params, report_fit, minimize
+from lmfit import Minimizer, create_params, report_fit
 
 import matplotlib.pyplot as plt
 import matplotlib
 
-matplotlib.use("Agg")  
+matplotlib.use("Agg")
 
 
 # create data to be fitted
@@ -20,17 +20,16 @@ data = amp * np.sin(omega * x + shift) * np.exp(-x * x * decay) + np.random.norm
 )
 
 
-# define objective function: returns the array to be minimized
-def fcn2min(params, x, data):
-    """Model a decaying sine wave and subtract data."""
-    v = params.valuesdict()
-
-    model = v["amp"] * np.sin(x * v["omega"] + v["shift"]) * np.exp(-x * x * v["decay"])
+def residual(parameters, x, data):
+    model = (
+        parameters["amp"]
+        * np.sin(x * parameters["omega"] + parameters["shift"])
+        * np.exp(-x * x * parameters["decay"])
+    )
     return model - data
 
 
-# create a set of Parameters
-params = create_params(
+parameters_initial = create_params(
     amp=dict(value=10, min=0),
     decay=0.1,
     omega=3.0,
@@ -38,24 +37,23 @@ params = create_params(
 )
 
 initial_model = (
-    params["amp"].value
-    * np.sin(x * params["omega"].value + params["shift"].value)
-    * np.exp(-x * x * params["decay"].value)
+    parameters_initial["amp"].value
+    * np.sin(x * parameters_initial["omega"].value + parameters_initial["shift"].value)
+    * np.exp(-x * x * parameters_initial["decay"].value)
 )
-# do fit, here with the default leastsq algorithm
-minner = Minimizer(fcn2min, params, fcn_args=(x, data))
-result = minner.minimize(method="least_squares")
 
-# calculate final result
+minimizer = Minimizer(residual, parameters_initial, fcn_args=(x, data))
+result = minimizer.minimize(method="least_squares")
+
+# calculate final
 final = data + result.residual
 
 # write error report
 report_fit(result)
 
-# try to plot results
 
-plt.plot(x, data, "+", label="data", color="red")
+plt.scatter(x, data, label="data", color="red")
 plt.plot(x, initial_model, label="initial", linestyle="--", color="green")
 plt.plot(x, final, label="final", color="blue")
 plt.legend()
-plt.savefig("parameters_values_lmfit.png")
+plt.savefig("parameters_values_lmfit.png", bbox_inches="tight", pad_inches=0.03)
