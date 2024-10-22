@@ -1,0 +1,41 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-ast
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+        exclude: "business-facing/layer"
+      - id: trailing-whitespace
+        exclude: "business-facing/layer"
+      - id: check-yaml
+        exclude: "business-facing/layer"
+      - id: check-json
+        exclude: "business-facing/layer"
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.6
+    hooks:
+      - id: ruff
+        args: ["--fix", "--show-fixes", "--extend-ignore=T201"]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.1
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports, --follow-imports=skip, --strict-optional, --disallow-untyped-defs]
+
+  - repo: https://github.com/kynan/nbstripout   # Fixed indentation and missing dash here
+    rev: 0.6.1
+    hooks:
+      - id: nbstripout
+
+  - repo: https://github.com/srstevenson/nb-clean
+    rev: 2.4.0
+    hooks:
+      - id: nb-clean
+        args: [--remove-empty-cells]
