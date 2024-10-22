@@ -9,7 +9,7 @@ np.random.seed(42)
 x = np.linspace(0, 10, 20)
 true_params = [2.5, -1.2]  # true slope and intercept for a linear model
 y_true = true_params[0] * x + true_params[1]
-y_observed = y_true + np.random.normal(scale=1.0, size=len(x))  # add some noise
+y_observed = y_true + np.random.normal(scale=3.0, size=len(x))  # add some noise
 
 # Fit a simple linear model to get the predicted values
 fit_params = np.polyfit(x, y_observed, 1)

@@ -5,7 +5,7 @@ from lmfit import Minimizer, create_params, report_fit, minimize
 import matplotlib.pyplot as plt
 import matplotlib
 
-matplotlib.use("Agg")  # Use a non-interactive backend
+matplotlib.use("Agg")  
 
 
 # create data to be fitted

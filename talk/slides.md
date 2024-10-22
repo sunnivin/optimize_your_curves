@@ -31,6 +31,8 @@ echo $(whoami)
 
 # Agenda
 
+#TODO update content in the end
+
 ## Curve Fitting 
   - Why? 
   - What?
@@ -39,17 +41,15 @@ echo $(whoami)
     - Attention: how to deal with bounds
  
 
+--- 
+# Problem
+
+![h:500 right](figures/plot/observed_low.png)
+
+
+- What are the optimal model parameters for my data? 
+
 ---
-
-
-# Start with a data set coming in, with a known model, how does it look like? 
-
-#TODO include picture of plot
-
-
----
-
-
 
 
 > **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible 
@@ -82,17 +82,14 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ---
 
-# Minimize the difference between *observed* and *predicted* values 
+# Difference of *observed* and *predicted* values 
 
-
-#TODO include illustrations
 <!-- _class: split-text-image -->
 
 <div class=ldiv>
 
 
-![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
-*Figure credit: Radovan Bast*
+![](figures/plot/observed_vs_predicted_low.png)
 
 
 </div>
@@ -100,16 +97,31 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 <div class=rdiv>
 
-![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
-*Figure credit: Radovan Bast*
-
+![](figures/plot/chi_square_plot_low.png)
 
 </div>
 
+---
 
+# Curve fitting vs. model optimization 
+
+| Aspect              | Curve Fitting                                   | Model Optimization                              |
+|:---------------------|:------------------------------------------------|:------------------------------------------------|
+| **Scope**           | Specific; find a curve that fits data | Broad; enhance model performance in various contexts |
+| **Applications**     | Scientific, engineering, and data analysis | Machine learning, operations research, statistics, etc. |
+| **Techniques**      | Primarily uses least squares regression, polynomial fitting, non-linear fitting | Includes hyperparameter tuning, model selection, regularization, etc. |
+| **Goal**            | Model relationships between variables through a curve | Improve performance across various model types |
+
+
+---
+
+# The complicated real world is non-linear 
+
+![](figures/plot/observed_sin.png)
+ 
 --- 
 
-# Real (work) life example 
+# Real (NGI work) life example 
 
 <div class="twocols">
 
@@ -130,19 +142,6 @@ Horizontal displacement curves under load
 
 
 ---
-
-# Curve fitting vs. model optimization 
-
-| Aspect              | Curve Fitting                                   | Model Optimization                              |
-|:---------------------|:------------------------------------------------|:------------------------------------------------|
-| **Scope**           | Specific; find a curve that fits data | Broad; enhance model performance in various contexts |
-| **Applications**     | Scientific, engineering, and data analysis | Machine learning, operations research, statistics, etc. |
-| **Techniques**      | Primarily uses least squares regression, polynomial fitting, non-linear fitting | Includes hyperparameter tuning, model selection, regularization, etc. |
-| **Goal**            | Model relationships between variables through a curve | Improve performance across various model types |
-
-
-
----
 <!-- _class: title -->
 <!-- paginate: false -->
 # :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
@@ -159,6 +158,7 @@ Horizontal displacement curves under load
 
 # Curve fitting in Python needs
   - Estimate of uncertainties and parameter correlations estimates
+  - Non-linear problem formulation
   - Easy change of the fitting algorithm 
     - Functionality for handeling parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
   
@@ -166,7 +166,7 @@ Horizontal displacement curves under load
 
 --- 
 
-# Curve fitting in Python tool 
+# Recommended tool 
 
 
 | **Topic**                        | **Details**                                                                         |
