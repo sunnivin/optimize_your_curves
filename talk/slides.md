@@ -11,7 +11,7 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 <!-- _class: title -->
 <!-- _header: '_24.10.2024_' -->
 <!-- paginate: false -->
-# Optimize your curves, 
+# Optimize your curves
 ## (No gym required)
 
 ####
@@ -19,13 +19,13 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 #### Sunniva Indrehus
 
 
---- 
+---
 
 <!-- _class: title -->
 <!-- paginate: false -->
-# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
+# :chart_with_upwards_trend: + :muscle: + :snake: = :question:
 
---- 
+---
 
 <!-- paginate: true -->
 
@@ -34,21 +34,11 @@ echo $(whoami)
 ```
 ---
 
-
-
-# Agenda
-
-- Problem 
-- Curve fitting 
-- `lmfit`
-- Demo 
-
---- 
 # Problem
 
 |![](figures/plot/observed_low.png)|
 |:--:|
-| Which model parameters describe this data? |
+| Which model parameters describe these data points? |
 
 
 
@@ -58,7 +48,7 @@ echo $(whoami)
 ---
 
 
-> **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible 
+> **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible
 specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
 
 
@@ -69,14 +59,14 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 # What *is* Curve Fitting?
 
-* Identify the **best-fit curve** for a dataset with a known model 
+* Find the **best-fit curve** for a dataset using a known model
     * **Minimize** the difference between *observed* and *predicted* values
-        $$ 
-        \chi^2 = \sum_{i=1}^{N} \frac{(y_i^\text{obs} - y_i^\text{pred})^2}{\sigma_i^2} 
         $$
-* Categories of problems  
-    * Linear vs non-linear 
-      $$ 
+        \chi^2 = \sum_{i=1}^{N} \frac{(y_i^\text{obs} - y_i^\text{pred})^2}{\sigma_i^2}
+        $$
+* Categories of problems
+    * Linear vs non-linear
+      $$
       y_1 = ax + b \qquad \text{vs} \quad y_2 = \sin(\omega t)\text{e}^{-x^2}
       $$
     * Unconstrained vs Constrained
@@ -88,7 +78,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ---
 
-# Difference between *observed* and *predicted* values 
+# Difference between *observed* and *predicted* values
 
 
 
@@ -118,10 +108,10 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 | |
 |-----|
 |![](figures/plot/true_model_sine.png)|
- 
---- 
 
-# Real (NGI work) life example 
+---
+
+# Real (NGI work) life example
 
 <div class="twocols">
 
@@ -141,22 +131,19 @@ Horizontal displacement curves under load
 </div>
 
 
---- 
+---
+
+# Curve fitting requirements
+- Estimate parameter uncertainties
+- Support non-linear problem solving
+- Easily change optimization algorithm
+- Provide high-level tools for setting parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
 
 
-<!-- paginate: true -->
 
-# Curve fitting requirements 
-  - Provide estimates of parameter uncertanties
-  - Handle non-linear problem formulations
-  - Easy changebility of the optimization algorithm 
-  - High level functionality for handling parameter [bounds](https://lmfit.github.io/lmfit-py/bounds.html)
-  
+---
 
-
---- 
-
-# Recommended tool (by me) 
+# Recommended tool (by me)
 
 
 | **Topic**                        | **Details**                                                                         |
@@ -176,7 +163,7 @@ Horizontal displacement curves under load
 ---
 
 
-# Problem set up
+# Problem setup
 ```python
 from lmfit import Minimizer, create_params
 
@@ -199,12 +186,12 @@ minimizer = Minimizer(residual, parameters_initial, fcn_args=(x, data))
 result = minimizer.minimize(method="least_squares")
 ```
 
---- 
+---
 
-# Handeling bounds 
+# Handling bounds
 
 ```python
-from lmfit import Parameters 
+from lmfit import Parameters
 
 params = Parameters()
 params.add('amp', value=10, min=0)
@@ -227,7 +214,7 @@ params = create_params(amp=dict(value=10, min=0),
 ---
 
 
-# Interperet simulation results
+# Interpret simulation results
 
 ```bash
 [[Fit Statistics]]
@@ -257,9 +244,9 @@ params = create_params(amp=dict(value=10, min=0),
 ---
 
 <!-- _class: title -->
-# :chart_with_upwards_trend: + :muscle: + :snake: = :question: 
+# :chart_with_upwards_trend: + :muscle: + :snake: = :question:
 
---- 
+---
 
 <!-- _class: title -->
-# :chart_with_upwards_trend: + :muscle: + :snake: = :heart: 
+# :chart_with_upwards_trend: + :muscle: + :snake: = :heart:
