@@ -142,6 +142,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ## `lmfit` 
 GitHub :star: 1.1k
+Latest commit (22.10.2024): 13.10.2024
 
 - High-level interface to non-linear optimization and curve fitting problems
 - Built on SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
@@ -153,6 +154,18 @@ GitHub :star: 1.1k
 
 ---
 
+| **Topic**                        | **Details**                                                                         |
+|----------------------------------|-------------------------------------------------------------------------------------|
+| **Library Name**                 | `lmfit`                                                                             |
+| **GitHub Stars**                 | ⭐ 1.1k                                                                              |
+| **Latest Commit Date**           | 22.10.2024 (Last Update: 13.10.2024)                                              |
+| **Description**                  | High-level interface to non-linear optimization and curve fitting problems          |
+| **Built On**                     | SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) |
+| **Supports**                     | - Uncertainties and parameter correlations estimates                                |
+|                                  | - Functionality for handling [bounds](https://lmfit.github.io/lmfit-py/bounds.html) |
+|                                  | - Easy change of the fitting algorithm                                              |
+
+---
 
 # Demo: Curve Fitting with `lmfit`**
 
