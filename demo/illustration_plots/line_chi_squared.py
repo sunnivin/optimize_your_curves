@@ -27,32 +27,36 @@ plot_type: str = "low"
 
 # Data plot
 plt.scatter(x, y_observed, color="red", label="Data", alpha=0.6)
-
-# Add function expressions
-# plt.text(
-#     0.5,
-#     0.95,
-#     "$y_{model}" + f"= {true_params[0]}x + {true_params[1]}$",
-#     color="green",
-#     fontsize=12,
-#     ha="center",
-#     transform=plt.gca().transAxes,
-# )
 plt.xlabel("x")
 plt.ylabel("y")
 plt.legend()
-plt.savefig(f"observed_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
+plt.savefig(f"data_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
+plt.close()
+
+
+# Data plot
+plt.scatter(x, y_observed, color="red", label="Data", alpha=0.6)
+plt.plot(x, y_predicted, color="blue", label="Fit", zorder=2)
+plt.text(
+    0.5,
+    0.95,
+    "$y_{fit}" + f"= {true_params[0]}x + {true_params[1]}$",
+    color="blue",
+    fontsize=12,
+    ha="center",
+    transform=plt.gca().transAxes,
+)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.savefig(f"data_model_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
 plt.close()
 
 
 # Plot 1: Observed vs Predicted
-plt.figure(figsize=(10, 5))
 plt.scatter(x, y_observed, color="red", label="Data", alpha=0.6)
 plt.plot(x, y_true, color="green", linestyle="--", label="Model", zorder=1)
 plt.plot(x, y_predicted, color="blue", label="Fit", zorder=2)
-
-
-# Add lines to show residuals
 for i in range(len(x)):
     plt.plot(
         [x[i], x[i]],
@@ -79,28 +83,24 @@ plt.text(
     ha="center",
     transform=plt.gca().transAxes,
 )
-
-# Customize the plot
 plt.xlabel("x")
 plt.ylabel("y")
 plt.legend()
 plt.savefig(
     f"observed_vs_predicted_{plot_type}.png", bbox_inches="tight", pad_inches=0.03
 )
-plt.close()  # Close the figure to free memory
+plt.close()
 
 # Plot 2: Residuals
-plt.figure(figsize=(10, 5))
 plt.bar(x, residuals, color="purple", alpha=0.6)
 plt.axhline(0, color="black", linewidth=1)
 plt.xlabel("x")
 plt.ylabel("Residuals (Observed - Predicted)")
 # Save the figure
-plt.savefig(f"residuals_plot_{plot_type}.png", dpi=300)
+plt.savefig(f"residuals_plot_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
 plt.close()  # Close the figure to free memory
 
 # Plot 3: Chi-Square values
-plt.figure(figsize=(10, 5))
 plt.bar(x, chi_square, color="orange", alpha=0.6)
 plt.axhline(
     np.mean(chi_square),

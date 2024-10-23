@@ -30,7 +30,7 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 <!-- paginate: true -->
 
 ```
-echo $(whoami)
+sunniva@ngi$ echo $(whoami)
 ```
 ---
 
@@ -38,15 +38,102 @@ echo $(whoami)
 
 |![](figures/plot/observed_low.png)|
 |:--:|
-| Which model parameters describe these data points? |
-
-
-
-
-<!-- - What are the optimal model parameters for my data?  -->
+|  |
 
 ---
 
+
+# A solution
+
+|![](figures/plot/data_model_first_low.png)|
+|:--:|
+|  |
+
+
+---
+
+# Another solution
+
+|![](figures/plot/data_model_third_low.png)|
+|:--:|
+|  |
+
+---
+
+# A third solution
+|![](figures/plot/data_model_fifth_low.png)|
+|:--:|
+|  |
+
+
+---
+
+
+
+# :exclamation: You control your model :exclamation:
+|![](figures/plot/data_model_low.png)|
+|:--:|
+|  |
+
+
+---
+
+
+<!-- _header: <br> <br> *Figure credit: PAGE, Ana M., et al. A macro-element pile foundation model for integrated analyses of monopile-based offshore wind turbines. Ocean Engineering, 2018, 167: 23-35.* -->
+
+# Real (NGI work) life example
+
+<div class="twocols">
+
+| | |
+|-----|-----|
+|![h:500](figures/illustrations/offshore_structure.png)|![h:500]()|
+| | |
+
+
+
+<p class="break"></p>
+
+<!-- ![w:450 h:350](figures/illustrations/scaled_pile_head_equal_beginning.png)
+Horizontal displacement curves under load -->
+
+</div>
+
+---
+
+
+<style>
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid red; /* Frame color */
+    padding: 0; /* Remove padding */
+  }
+</style>
+
+
+<!-- _header: <br> <br> *Figure credit: PAGE, Ana M., et al. A macro-element pile foundation model for integrated analyses of monopile-based offshore wind turbines. Ocean Engineering, 2018, 167: 23-35.* -->
+
+# Real (NGI work) life example
+
+<div class="twocols">
+
+| | |
+|-----|-----|
+|![h:500](figures/illustrations/offshore_structure_region.png)|![h:500](figures/illustrations/offshore_structure_force.png)|
+| | |
+
+
+
+<p class="break"></p>
+
+![w:450 h:350](figures/illustrations/scaled_pile_head_equal_beginning.png)
+Horizontal displacement curves under load
+
+</div>
+
+---
 
 > **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible
 specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
@@ -67,7 +154,7 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 * Categories of problems
     * Linear vs non-linear
       $$
-      y_1 = ax + b \qquad \text{vs} \quad y_2 = \sin(\omega t)\text{e}^{-x^2}
+      y_1 = ax + b \qquad \text{vs} \quad y_2= A \text{sin}(\omega x + \phi ) \text{e}^{-\gamma x^2 }
       $$
     * Unconstrained vs Constrained
       $$
@@ -75,8 +162,9 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
       $$
 
 
-
 ---
+
+
 
 # Difference between *observed* and *predicted* values
 
@@ -95,38 +183,6 @@ specifically : the mathematical procedures (such as finding the maximum of a fun
 
 ###
 ![](figures/plot/chi_square_plot_low.png)
-
-</div>
-
-
-
-
----
-
-# The real world is complicated
-
-| |
-|-----|
-|![](figures/plot/true_model_sine.png)|
-
----
-
-# Real (NGI work) life example
-
-<div class="twocols">
-
-
-##
-![w:450 h:350](figures/illustrations/full_model.png)
-Offshore structure
-
-
-
-<p class="break"></p>
-
-###
-![w:450 h:350](figures/illustrations/scaled_pile_head_equal_beginning.png)
-Horizontal displacement curves under load
 
 </div>
 
@@ -158,10 +214,24 @@ Horizontal displacement curves under load
 
 
 
-# <div style="text-align: center;">:sparkles: Let's see some code :sparkles: </div>
+
+# A new non-linear problem
+
+| |
+|-----|
+|![](figures/plot/true_model_sine.png)|
+| |
+
+
+$$
+y= A \text{sin}(\omega x + \phi ) \text{e}^{-\gamma x^2 }
+$$
 
 ---
 
+# <div style="text-align: center;">:sparkles: Let's see some code :sparkles: </div>
+
+---
 
 # Problem setup
 ```python
@@ -169,17 +239,17 @@ from lmfit import Minimizer, create_params
 
 def residual(parameters, x, data):
     model = (
-        parameters["amp"]
-        * np.sin(x * parameters["omega"] + parameters["shift"])
-        * np.exp(-x * x * parameters["decay"])
+        parameters["amplitude"]
+        * np.sin(x * parameters["omega"] + parameters["phi"])
+        * np.exp(-x * x * parameters["gamma"])
     )
     return model - data
 
 parameters_initial = create_params(
-    amp=10,
-    decay=0.1,
+    amplitude=10,
+    gamma=0.1,
     omega=3.0,
-    shift=value=0.0,
+    phi=0.0,
 )
 
 minimizer = Minimizer(residual, parameters_initial, fcn_args=(x, data))
@@ -194,9 +264,9 @@ result = minimizer.minimize(method="least_squares")
 from lmfit import Parameters
 
 params = Parameters()
-params.add('amp', value=10, min=0)
-params.add('decay', value=0.1)
-params.add('shift', value=0.0, min=-np.pi/2., max=np.pi/2.)
+params.add('amplitude', value=10, min=0)
+params.add('gamma', value=0.1)
+params.add('phi', value=0.0, min=-np.pi/2., max=np.pi/2.)
 params.add('omega', value=3.0)
 
 ```
@@ -204,10 +274,10 @@ params.add('omega', value=3.0)
 ```python
 from lmfit import create_params
 
-params = create_params(amp=dict(value=10, min=0),
-                       decay=0.1,
+params = create_params(amplitude=dict(value=10, min=0),
+                       gamma=0.1,
                        omega=3,
-                       shift=dict(value=0, min=-np.pi/2, max=np.pi/2))
+                       phi=dict(value=0, min=-np.pi/2, max=np.pi/2))
 ```
 
 
@@ -227,19 +297,19 @@ params = create_params(amp=dict(value=10, min=0),
     Akaike info crit   = -957.236198
     Bayesian info crit = -942.407756
 [[Variables]]
-    amp:    5.03088066 +/- 0.04005821 (0.80%) (init = 10)
-    decay:  0.02495457 +/- 4.5396e-04 (1.82%) (init = 0.1)
+    amplitude:    5.03088066 +/- 0.04005821 (0.80%) (init = 10)
+    gamma:  0.02495457 +/- 4.5396e-04 (1.82%) (init = 0.1)
     omega:  2.00026311 +/- 0.00326183 (0.16%) (init = 3)
-    shift: -0.10264955 +/- 0.01022294 (9.96%) (init = 0)
+    phi: -0.10264955 +/- 0.01022294 (9.96%) (init = 0)
 [[Correlations]] (unreported correlations are < 0.100)
-    C(omega, shift) = -0.7852
-    C(amp, decay)   = +0.5840
-    C(amp, shift)   = -0.1179
+    C(omega, phi) = -0.7852
+    C(amplitude, gamma)   = +0.5840
+    C(amplitude, phi)   = -0.1179
 ```
 ---
 
 
-# <div style="text-align: center;">:woman_technologist: Demo :woman_technologist:  </div>
+# <div style="text-align: center;">:woman_technologist: [Demo](http://127.0.0.1:8888/notebooks/damped_sine_optimization.ipynb) :woman_technologist:  </div>
 
 ---
 

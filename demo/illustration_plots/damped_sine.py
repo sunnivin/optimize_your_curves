@@ -58,10 +58,10 @@ plt.savefig("parameters_values_lmfit.png", bbox_inches="tight", pad_inches=0.03)
 # Additional plot: true model
 true_model = amp * np.sin(omega * x + shift) * np.exp(-x * x * decay)
 
-# Plotting the data and the true model
+
 plt.figure()
 plt.scatter(x, data, label="Data", color="red", alpha=0.6)
-plt.plot(x, true_model, "--", label="True", color="green", linewidth=2)
+# plt.plot(x, true_model, "--", label="True", color="green", linewidth=2)
 
 # Adding the true model expression as text
 model_text = r"$y = %.f \sin(%.f x  %.2f) \, e^{-x^2 \cdot %.3f}$" % (
@@ -70,7 +70,7 @@ model_text = r"$y = %.f \sin(%.f x  %.2f) \, e^{-x^2 \cdot %.3f}$" % (
     shift,
     decay,
 )
-plt.text(0.5, 0.8, model_text, fontsize=12, transform=plt.gca().transAxes)
+# plt.text(0.5, 0.8, model_text, fontsize=12, transform=plt.gca().transAxes)
 
 plt.xlabel("x")
 plt.ylabel("y")
