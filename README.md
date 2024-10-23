@@ -1,6 +1,6 @@
-# Testing pydantic v2
+# Optimize your curves, no gym required
 
-This repository contains a [talk](https://sunnivin.github.io/a-new-core/talk/slides.html) and a demo (`demo`) for exploring optimization in Python presented at the Oslo Python MeetUp 24.10.2024.
+This repository contains a [talk](https://sunnivin.github.io/a-new-core/talk/slides.html) and a demo [demo](https://github.com/sunnivin/optimize_your_curves/blob/main/demo/damped_sine_optimization.ipynb) for doing curve fitting with lmfit presented at the Oslo Python MeetUp 24.10.2024.
 
 
 

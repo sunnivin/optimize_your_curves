@@ -43,6 +43,15 @@ sunniva@ngi$ echo $(whoami)
 ---
 
 
+> **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible
+specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
+
+
+> **Curve Fitting**: the empirical determination of a curve or function that approximates a set of data
+<span style="display: block; text-align: right; font-style: italic; margin-top: 0.5rem;">*Merriam-Webster Dictionary*</span>
+
+---
+
 # A solution
 
 |![](figures/plot/data_model_first_low.png)|
@@ -70,7 +79,7 @@ sunniva@ngi$ echo $(whoami)
 
 
 
-# :exclamation: You control your model :exclamation:
+# :exclamation: Choose your model :exclamation:
 |![](figures/plot/data_model_low.png)|
 |:--:|
 |  |
@@ -132,15 +141,6 @@ Horizontal displacement curves under load -->
 Horizontal displacement curves under load
 
 </div>
-
----
-
-> **Optimization**: an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible
-specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
-
-
-> **Curve Fitting**: the empirical determination of a curve or function that approximates a set of data
-<span style="display: block; text-align: right; font-style: italic; margin-top: 0.5rem;">*Merriam-Webster Dictionary*</span>
 
 ---
 
