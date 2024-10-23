@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=http://localhost:8080/
+HostUrl=https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f40d.svg
