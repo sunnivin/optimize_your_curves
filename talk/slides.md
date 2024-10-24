@@ -146,7 +146,7 @@ Horizontal displacement curves under load
 
 # What *is* Curve Fitting?
 
-* Find the **best-fit curve** for a dataset using a *known model*
+* Find the **best-fit curve** for a dataset using a **known model**
     * **Minimize** the difference between *observed* and *predicted* values
         $$
         \chi^2 = \sum_{i=1}^{N} \frac{(y_i^\text{obs} - y_i^\text{pred})^2}{\sigma_i^2}
