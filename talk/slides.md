@@ -205,9 +205,9 @@ Horizontal displacement curves under load
 | **Topic**                        | **Details**                                                                         |
 |:----------------------------------|:-------------------------------------------------------------------------------------|
 | Library Name                 | `lmfit`                                                                             |
+| Description                  | High-level interface to non-linear optimization and curve fitting problems          |
 | GitHub Stars                 | :star: 1.1k                                                                              |
 | Last Commit Date           | 13.10.2024 (on 22.10.2024)                                             |
-| Description                  | High-level interface to non-linear optimization and curve fitting problems          |
 | Built On                     | SciPy’s [`curve_fit`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) |
 
 ---
