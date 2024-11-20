@@ -1,0 +1,44 @@
+name: Deploy Marp Documentation
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up environment variables
+      - name: Set up environment variables
+        run: echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
+
+      # Step 3: Run the Marp command using Docker
+      - name: Generate Marp documentation
+        run: |
+          docker run --rm \
+            -v $PWD:/home/marp/app/ \
+            -e MARP_USER="$(id -u):$(id -g)" \
+            -e LANG=$LANG \
+            marpteam/marp-cli:v3.2.0 \
+            --theme talk/ngi-theme.css talk/slides.md --html
+
+      # Step 4: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        run: |
+          mkdir -p docs
+          mv talk/slides.html docs/index.html
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/
+          git commit -m "Deploy Marp documentation"
+          git push

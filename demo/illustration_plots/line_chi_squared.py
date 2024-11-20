@@ -107,10 +107,10 @@ plt.axhline(
     color="black",
     linewidth=1,
     linestyle="--",
-    label=r"$\bar{\chi}^2$",
+    label=r"$\chi^2$",
 )
 plt.xlabel("x")
-plt.ylabel(r"$\chi^2$")
+plt.ylabel(r"$\chi_i^2$")
 plt.legend()
 plt.savefig(f"chi_square_plot_{plot_type}.png", bbox_inches="tight", pad_inches=0.03)
 plt.close()
