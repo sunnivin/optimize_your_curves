@@ -46,7 +46,7 @@ jobs:
           mv talk/slides.html index.html
           cp -r talk/figures figures
           git add index.html
-          git add figures
+          git add -f figures
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Deploy Marp slides [skip ci]" || echo "No changes to commit"
