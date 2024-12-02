@@ -46,6 +46,8 @@ jobs:
           mv talk/slides.html index.html
           cp -r talk/figures figures
           git add index.html
+          git add -f talk/figures
+          git add talk/slides.html
           git add -f figures
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
