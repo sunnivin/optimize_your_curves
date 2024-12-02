@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to gh-pages branch
         run: |
           mkdir -p .
-          git add talk/index.html
+          git add talk/slides.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Deploy Marp slides [skip ci]" || echo "No changes to commit"
