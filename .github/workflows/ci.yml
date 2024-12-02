@@ -44,7 +44,7 @@ jobs:
       # Step 5: Deploy to gh-pages branch
       - name: Deploy to gh-pages branch
         run: |
-          ls -l talk/
+          ls -l
           git add talk/slides.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
